@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/textInputEditText"
+        android:layout_width="354dp"
+        android:layout_height="45dp"
+        android:hint="Please type in the currency amount"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.482" />
+
+    <Spinner
+        android:id="@+id/spinner2"
+        android:layout_width="160dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="28dp"
+        app:layout_constraintBottom_toTopOf="@+id/textInputEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.882" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Convert"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputEditText"
+        app:layout_constraintVertical_bias="0.08" />
+
+    <TextView
+        android:id="@+id/textViewResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your conversion result will appear here."
+        android:textSize="18dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintVertical_bias="0.16" />
+
+    <Spinner
+        android:id="@+id/spinner3"
+        android:layout_width="160dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/textInputEditText"
+        app:layout_constraintEnd_toStartOf="@+id/spinner2"
+        app:layout_constraintHorizontal_bias="0.444"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="234dp"
+        android:layout_height="85dp"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="Please select the source currency and the target currency below:"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/textInputEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.382" />
+
+    <TextView
+        android:id="@+id/from"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="FROM:"
+        app:layout_constraintBottom_toTopOf="@+id/spinner3"
+        app:layout_constraintEnd_toEndOf="@+id/spinner3"
+        app:layout_constraintHorizontal_bias="0.084"
+        app:layout_constraintStart_toStartOf="@+id/spinner3"
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="TO:"
+        app:layout_constraintBottom_toTopOf="@+id/spinner2"
+        app:layout_constraintEnd_toEndOf="@+id/spinner2"
+        app:layout_constraintHorizontal_bias="0.035"
+        app:layout_constraintStart_toStartOf="@+id/spinner2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
