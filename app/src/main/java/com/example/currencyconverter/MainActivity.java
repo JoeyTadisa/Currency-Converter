@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         dropdown2 = findViewById(R.id.spinner2);
         b1 = findViewById(R.id.button);
 
-        ArrayAdapter adapter = new ArrayAdapter<String>(
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
                 R.layout.support_simple_spinner_dropdown_item,
                 currencies
@@ -45,18 +44,16 @@ public class MainActivity extends AppCompatActivity {
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Double result;
-                Double amount = Double.parseDouble(textInput.getText().toString());
+                double result;
+                double amount = Double.parseDouble(textInput.getText().toString());
 
-                if(dropdown1.getSelectedItem().toString() == "USD" && dropdown2.getSelectedItem().toString() == "EUR"){
+                if(dropdown1.getSelectedItem().toString().equals("USD") && dropdown2.getSelectedItem().toString().equals("EUR")) {
                     result = amount * toEuro;
                     currencyResult.setText("$" + textInput.getText().toString() + "  = €" + result + "\n The rate today is $1 = €" + toEuro );
-                }else if(dropdown1.getSelectedItem().toString() == "EUR" && dropdown2.getSelectedItem().toString() == "USD"){
+                }else if(dropdown1.getSelectedItem().toString().equals("EUR") && dropdown2.getSelectedItem().toString().equals("USD")){
                     result = amount * toDollar;
                     currencyResult.setText("€" +textInput.getText().toString() + " = $" + result + "\n The rate today is €1 = $" + toDollar);
-                }else{
-                    currencyResult.setText("Please select an alternate currency combination.");
-                }
+                }else currencyResult.setText(R.string.encourageAlternative); //Prompts the user to pick a currency pairs that are not the same
             }
         });
     }

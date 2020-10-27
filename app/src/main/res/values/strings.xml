@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">CurrencyConverter</string>
+    <string name="TextInputHint">Please type in the currency amount</string>
+    <string name="ConvertButtonHint">Convert</string>
+    <string name="TextResult">Your conversion result will appear here.</string>
+    <string name="TextViewHint">Please select the source currency and the target currency below:</string>
+    <string name="spinnerLabel_From">FROM:</string>
+    <string name="spinnerLabel_To">TO:</string>
+    <string name="encourageAlternative">Please select an alternate currency combination.</string>
+    <string name="textInputHint">Please type in the currency amount</string>
+    <string name="convertButtonHint">Convert</string>
+    <string name="textResultHint">Your conversion result will appear here.</string>
+    <string name="textPrompt">Please select the source currency and the target currency below:</string>
+    <string name="spinnerLabel_from">FROM:</string>
+    <string name="spinnerLabel_to">TO:</string>
 </resources>

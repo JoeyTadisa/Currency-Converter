@@ -8,64 +8,61 @@
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/textInputEditText"
-        android:layout_width="354dp"
-        android:layout_height="45dp"
-        android:hint="@string/TextInputHint"
+        android:layout_width="361dp"
+        android:layout_height="42dp"
         android:gravity="center"
+        android:hint="@string/textInputHint"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.482" />
+        app:layout_constraintVertical_bias="0.634" />
 
     <Spinner
         android:id="@+id/spinner2"
         android:layout_width="160dp"
         android:layout_height="45dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputEditText"
+        android:layout_marginEnd="240dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.875" />
+        app:layout_constraintVertical_bias="0.456" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/ConvertButtonHint"
+        android:text="@string/convertButtonHint"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputEditText"
-        app:layout_constraintVertical_bias="0.08" />
+        app:layout_constraintVertical_bias="0.283" />
 
     <TextView
         android:id="@+id/textViewResult"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/TextResult"
-        android:textSize="18sp"
         android:gravity="center"
+        android:text="@string/textResultHint"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.16" />
+        app:layout_constraintVertical_bias="0.481" />
 
     <Spinner
         android:id="@+id/spinner3"
         android:layout_width="160dp"
         android:layout_height="45dp"
-        android:layout_marginBottom="40dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputEditText"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/spinner2"
-        app:layout_constraintHorizontal_bias="0.474"
+        app:layout_constraintHorizontal_bias="0.846"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.456" />
 
     <TextView
         android:id="@+id/textView2"
@@ -73,21 +70,21 @@
         android:layout_height="85dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
-        android:text="@string/TextViewHint"
+        android:text="@string/textPrompt"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/textInputEditText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.382" />
+        app:layout_constraintVertical_bias="0.167" />
 
     <TextView
         android:id="@+id/from"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="@string/spinnerLabel_From"
+        android:text="@string/spinnerLabel_from"
         app:layout_constraintBottom_toTopOf="@+id/spinner3"
         app:layout_constraintEnd_toEndOf="@+id/spinner3"
         app:layout_constraintHorizontal_bias="0.084"
@@ -100,7 +97,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="@string/spinnerLabel_To"
+        android:text="@string/spinnerLabel_to"
         app:layout_constraintBottom_toTopOf="@+id/spinner2"
         app:layout_constraintEnd_toEndOf="@+id/spinner2"
         app:layout_constraintHorizontal_bias="0.035"
