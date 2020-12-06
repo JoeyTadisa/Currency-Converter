@@ -17,8 +17,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        String [] currencies = {"EUR", "USD"};
-
         final Spinner dropdown1, dropdown2;
         final EditText textInput;
         Button b1;
@@ -30,16 +28,15 @@ public class MainActivity extends AppCompatActivity {
         dropdown2 = findViewById(R.id.spinner2);
         b1 = findViewById(R.id.button);
 
+        final ExchangeRateDatabase currencyDropList = new ExchangeRateDatabase();
+        final ExchangeRate exchangeRate = new ExchangeRate();
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
-                R.layout.support_simple_spinner_dropdown_item,
-                currencies
+                R.layout.support_simple_spinner_dropdown_item, currencyDropList.getCurrencies()
         );
         dropdown1.setAdapter(adapter);
         dropdown2.setAdapter(adapter);
-
-        final Double toEuro = 0.85;
-        final Double toDollar = 1.17;
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,13 +44,11 @@ public class MainActivity extends AppCompatActivity {
                 double result;
                 double amount = Double.parseDouble(textInput.getText().toString());
 
-                if(dropdown1.getSelectedItem().toString().equals("USD") && dropdown2.getSelectedItem().toString().equals("EUR")) {
-                    result = amount * toEuro;
-                    currencyResult.setText("$" + textInput.getText().toString() + "  = €" + result + "\n The rate today is $1 = €" + toEuro );
-                }else if(dropdown1.getSelectedItem().toString().equals("EUR") && dropdown2.getSelectedItem().toString().equals("USD")){
-                    result = amount * toDollar;
-                    currencyResult.setText("€" +textInput.getText().toString() + " = $" + result + "\n The rate today is €1 = $" + toDollar);
-                }else currencyResult.setText(R.string.encourageAlternative); //Prompts the user to pick a currency pairs that are not the same
+                String d1 = dropdown1.getSelectedItem().toString();
+                String d2 = dropdown2.getSelectedItem().toString();
+                result = currencyDropList.convert(amount, d1, d2);
+
+                currencyResult.setText(("Result: " + exchangeRate.roundValue(amount) + " " + d1 + " is  " + exchangeRate.roundValue(result) + " " + d2 ));
             }
         });
     }
