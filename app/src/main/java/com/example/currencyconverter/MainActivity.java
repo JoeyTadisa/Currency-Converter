@@ -48,8 +48,13 @@ public class MainActivity extends AppCompatActivity {
                 String d2 = dropdown2.getSelectedItem().toString();
                 result = currencyDropList.convert(amount, d1, d2);
 
-                currencyResult.setText(("Result: " + exchangeRate.roundValue(amount) + " " + d1 + " is  " + exchangeRate.roundValue(result) + " " + d2 ));
+                currencyResult.setText(("Result: " + exchangeRate.roundValue(amount) + " " +
+                        d1 + " is  " + exchangeRate.roundValue(result) + " " + d2 ));
             }
         });
+
+        //TODO Exercise 2.5 Currency List (Custom Adapter)
+        //Extend your list and the Spinners such that you directly show the exchange rate in the list.
+        //For this you need to write your own adapter class as shown in the lecture.
     }
 }
