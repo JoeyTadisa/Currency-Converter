@@ -4,9 +4,7 @@ public class ExchangeRate {
     private String currencyName;
     private double rateForOneEuro;
 
-    public ExchangeRate() {
-
-    }
+    public ExchangeRate() {}
 
     public ExchangeRate(String currencyName, double rateForOneEuro) {
         this.currencyName = currencyName;
