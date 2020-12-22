@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -17,8 +17,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       /* Toolbar myToolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);*/
+        Toolbar myToolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
 
         final Spinner dropdown1, dropdown2;
         final EditText textInput;
@@ -59,9 +59,5 @@ public class MainActivity extends AppCompatActivity {
         //TODO Exercise 2.5 Currency List (Custom Adapter)
         //Extend your list and the Spinners such that you directly show the exchange rate in the list.
         //For this you need to write your own adapter class as shown in the lecture.
-    }
-
-    public void setSupportActionBar(Toolbar supportActionBar) {
-
     }
 }
