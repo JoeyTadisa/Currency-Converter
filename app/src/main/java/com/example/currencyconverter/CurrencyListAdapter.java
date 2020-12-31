@@ -70,7 +70,7 @@ public class CurrencyListAdapter extends BaseAdapter {
         String currencyName = entry.getCurrencies()[position];
         String imageResource = "flag_" + currencyName.toLowerCase();
         int imageId = context.getResources().getIdentifier(imageResource, "drawable", context.getPackageName());
-
+        Double forex = entry.getExchangeRate(currencyName);
 
         if(convertView == null){
             LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -82,8 +82,11 @@ public class CurrencyListAdapter extends BaseAdapter {
 
         //currencyList = entry.getCurrencies();
 
-        TextView textView = convertView.findViewById(R.id.list_text_view);
-        textView.setText(currencyName);
+        TextView currencyNameView = convertView.findViewById(R.id.list_text_view);
+        currencyNameView.setText(currencyName);
+
+        TextView foreignExchangeRate = convertView.findViewById(R.id.forex);
+        foreignExchangeRate.setText(forex.toString());
 
         return convertView;
     }

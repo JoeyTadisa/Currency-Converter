@@ -13,4 +13,5 @@
     <string name="textPrompt">Please select the source currency and the target currency below:</string>
     <string name="spinnerLabel_from">FROM:</string>
     <string name="spinnerLabel_to">TO:</string>
+    <string name="flags">flags</string>
 </resources>
