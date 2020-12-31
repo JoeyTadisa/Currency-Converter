@@ -1,8 +1,13 @@
 package com.example.currencyconverter;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -12,6 +17,24 @@ import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.my_menu, menu);
+        //return super.onCreateOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent intent = new Intent(MainActivity.this, CurrencyListActivity.class);
+        startActivity(intent);
+
+        switch(item.getItemId()){
+            case R.id.my_menu:
+                Log.i("Toolbar menu", "Menu was clicked");
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +57,15 @@ public class MainActivity extends AppCompatActivity {
         final ExchangeRateDatabase currencyDropList = new ExchangeRateDatabase();
         final ExchangeRate exchangeRate = new ExchangeRate();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+        /*ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
                 R.layout.support_simple_spinner_dropdown_item, currencyDropList.getCurrencies()
-        );
-        dropdown1.setAdapter(adapter);
-        dropdown2.setAdapter(adapter);
+        );*/
+        CurrencyListAdapter cla = new CurrencyListAdapter(currencyDropList);
+        /*dropdown1.setAdapter(adapter);
+        dropdown2.setAdapter(adapter);*/
+        dropdown1.setAdapter(cla);
+        dropdown2.setAdapter(cla);
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override

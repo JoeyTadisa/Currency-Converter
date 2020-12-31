@@ -4,6 +4,7 @@ public class ExchangeRate {
     private String currencyName;
     private double rateForOneEuro;
 
+    //default constructor
     public ExchangeRate() {}
 
     public ExchangeRate(String currencyName, double rateForOneEuro) {

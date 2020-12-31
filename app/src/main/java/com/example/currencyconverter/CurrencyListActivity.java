@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 
 public class CurrencyListActivity extends AppCompatActivity {
     @Override
@@ -13,15 +13,17 @@ public class CurrencyListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_currency_list);
 
-        /*Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
+        Toolbar toolbar = findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
 
-        ExchangeRateDatabase exchangeRateDatabase = new ExchangeRateDatabase();
+        ExchangeRateDatabase rateDatabase = new ExchangeRateDatabase();
 
-        ArrayAdapter<String> currencyListAdapter = new ArrayAdapter<>(this,
-                R.layout.activity_currency_list, exchangeRateDatabase.getCurrencies());
+        //ArrayAdapter<String> currencyListAdapter = new ArrayAdapter<>(this,
+        //       R.layout.activity_currency_list, rateDatabase.getCurrencies());
 
-        ListView listView = findViewById(R.id.currency_list);
-        listView.setAdapter(currencyListAdapter);
+        CurrencyListAdapter currencyListAdapter1 = new CurrencyListAdapter(rateDatabase);
+
+        ListView listView = findViewById(R.id.list_view);
+        listView.setAdapter(currencyListAdapter1);
     }
 }
