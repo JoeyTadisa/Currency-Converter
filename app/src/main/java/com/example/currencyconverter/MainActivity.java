@@ -15,13 +15,27 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.ActionProvider;
+import androidx.core.view.MenuItemCompat;
 
 public class MainActivity extends AppCompatActivity {
+
+    ActionProvider shareActionProvider;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.my_menu, menu);
-        //return super.onCreateOptionsMenu(menu);
+        MenuItem shareItem = menu.findItem(R.id.share_button);
+        shareActionProvider = MenuItemCompat.getActionProvider(shareItem);
+        setShareText(null);
         return true;
+    }
+
+    private void setShareText(String text) {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND); shareIntent.setType("text/plain");
+        if (text != null) {
+            shareIntent.putExtra(Intent.EXTRA_TEXT, text);
+        }
+        //shareActionProvider.setShareIntent(shareIntent);
     }
 
     @Override
@@ -78,12 +92,12 @@ public class MainActivity extends AppCompatActivity {
                 result = currencyDropList.convert(amount, d1, d2);
 
                 currencyResult.setText(("Result: " + exchangeRate.roundValue(amount) + " " +
-                        d1 + " is  " + exchangeRate.roundValue(result) + " " + d2 ));
+                        d1 + " is " + exchangeRate.roundValue(result) + " " + d2 ));
             }
         });
 
-        //TODO Exercise 2.5 Currency List (Custom Adapter)
-        //Extend your list and the Spinners such that you directly show the exchange rate in the list.
-        //For this you need to write your own adapter class as shown in the lecture.
+        //TODO Exercise 4.3: Include Share-Button
+        //In this exercise you will extend the currency converter with a „share“-button.
+        // On selection the current result of the currency conversion can be shared with other apps.
     }
 }

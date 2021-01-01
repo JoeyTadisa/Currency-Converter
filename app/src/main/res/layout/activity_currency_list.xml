@@ -11,26 +11,34 @@
         android:id="@+id/flag_icon"
         android:layout_width="48dp"
         android:layout_height="48dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         android:minWidth="48dp"
         android:minHeight="48dp"
-        android:contentDescription="@string/flags" />
+        android:layout_marginStart="8dp"
+        android:contentDescription="@string/flags"
+        android:layout_gravity="center"/>
 
     <TextView
         android:id="@+id/list_text_view"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_gravity="center"
+        android:gravity="center"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_weight="1"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
         android:id="@+id/forex"
-        android:layout_width="60dp"
+        android:layout_width="70dp"
         android:layout_height="48dp"
+        android:paddingRight="8dp"
         android:minWidth="60dp"
         android:minHeight="48dp"
-        android:textAlignment="gravity"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:textColor="@color/colorLightGrey"
         android:textStyle="italic" />
 </LinearLayout>
