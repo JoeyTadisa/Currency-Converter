@@ -3,9 +3,9 @@ package com.example.currencyconverter;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,12 +19,10 @@ import androidx.appcompat.widget.ShareActionProvider;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 
-import java.io.IOException;
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
 
     String response; //store the conversion result for sharing
+    ExchangeRateUpdateRunnable eruRunnable;
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -58,6 +56,12 @@ public class MainActivity extends AppCompatActivity {
 
         final ExchangeRateDatabase currencyDropList = new ExchangeRateDatabase();
         final ExchangeRate exchangeRate = new ExchangeRate();
+
+        Context context = null;
+        context.getApplicationContext();
+        eruRunnable = new ExchangeRateUpdateRunnable(context);
+        Thread t = new Thread(eruRunnable);
+        t.start();
 
         /*ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
@@ -100,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         refreshCurrencies.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                    updateCurrency();
+                    ExchangeRateUpdateRunnable.updateCurrency();
                 return true;
             }
         });
@@ -109,19 +113,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private void updateCurrency() {
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
-        ECBXmlParser xmlParser = new ECBXmlParser();
-        List<ECBXmlParser.NewExchangeRate> newCurrencyList = xmlParser.parse();
-        for (ECBXmlParser.NewExchangeRate newExchangeRate : newCurrencyList
-             ) {
-            ExchangeRateDatabase rateDatabase = new ExchangeRateDatabase();
-            double newRate = Double.parseDouble(newExchangeRate.rate);
-            rateDatabase.setExchangeRate(newExchangeRate.currencyName, newRate);
-        }
-    }
 
     private void setShareText(String text) {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
