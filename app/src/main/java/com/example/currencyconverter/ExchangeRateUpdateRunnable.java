@@ -1,8 +1,12 @@
 package com.example.currencyconverter;
 
 import android.content.Context;
+import android.os.Build;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.RequiresApi;
 
 import java.util.List;
 
@@ -25,17 +29,11 @@ public class ExchangeRateUpdateRunnable implements Runnable {
      *
      */
     static void updateCurrency() {
-        /*StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);*/
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
         ECBXmlParser xmlParser = new ECBXmlParser();
-        List<ECBXmlParser.NewExchangeRate> newCurrencyList = xmlParser.parse();
-        for (ECBXmlParser.NewExchangeRate newExchangeRate : newCurrencyList
-        ) {
-            ExchangeRateDatabase rateDatabase = new ExchangeRateDatabase();
-            double newRate = Double.parseDouble(newExchangeRate.rate);
-            rateDatabase.setExchangeRate(newExchangeRate.currencyName, newRate);
-        }
+        xmlParser.parse();
     }
 
     /**
@@ -74,12 +72,17 @@ public class ExchangeRateUpdateRunnable implements Runnable {
 
             private Context MainActivity;
 
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void run() {
                 Toast toast = Toast.makeText(context,"Update Successful", Toast.LENGTH_LONG);
                 toast.show();
+                ExchangeRateNotifier notifier = null;
+                if (context != null) {
+                    notifier = new ExchangeRateNotifier(context);
+                }
+                notifier.showOrUpdateNotfication();
             }
-
         };
     }
 }

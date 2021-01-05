@@ -22,17 +22,17 @@ public class ECBXmlParser {
          * @param currencyName
          * @param rate
          */
-        private NewExchangeRate(String currencyName, String rate){
+        private NewExchangeRate(String currencyName, String rate) {
             this.currencyName = currencyName;
             this.rate = rate;
         }
     }
 
     /**
-     * @return
+     *
      */
-    public List<NewExchangeRate> parse() {
-        List<NewExchangeRate> currencyEntries = new ArrayList<>();
+    public void parse() {
+        //List<NewExchangeRate> currencyEntries = new ArrayList<>();
         String currenciesReferenceSite = "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml";
 
         try {
@@ -43,28 +43,30 @@ public class ECBXmlParser {
             InputStream inputStream = connection.getInputStream(); //TODO The program cuts out here and says that the variable connection is unknown, so it doesn't actually retrieve any values.
             //XmlPullParser parser = XmlPullParserFactory.newInstance().newPullParser();
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-            factory.setNamespaceAware(true);
+            factory.setNamespaceAware(false);
             XmlPullParser parser = factory.newPullParser();
             //parser.setInput(new StringReader(content.replace("&","&amp;")));
-            parser.setInput(inputStream , connection.getContentEncoding());
+            parser.setInput(inputStream, connection.getContentEncoding());
 
             int eventType = parser.getEventType();
             //String tag =;
-            Log.i("Retrieve the event type",Integer.toString(eventType));
+            //Log.i("Retrieve the event type",Integer.toString(eventType));
 
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 if (eventType == XmlPullParser.START_TAG) {
-                    while ("cube".equalsIgnoreCase(parser.getName()) && ((parser.getAttributeValue(null, "currency")!=null) || (parser.getAttributeValue(null,"rate") != null))) {
-                        NewExchangeRate newExchangeRate = new NewExchangeRate(parser.getAttributeValue(null, "currency"),
-                                             parser.getAttributeValue(null, "rate"));
-                        currencyEntries.add(newExchangeRate);
+                    if ("Cube".equals(parser.getName()) && parser.getAttributeCount() == 2) {
+                        String newCurrency = parser.getAttributeValue(null, "currency");
+                        String newRate = parser.getAttributeValue(null, "rate");
+                        Double rate = Double.parseDouble(newRate);
+                        ExchangeRateDatabase.setExchangeRate(newCurrency, rate);
+                       /* NewExchangeRate newExchangeRate = new NewExchangeRate(newCurrency, newRate);
+                        currencyEntries.add(newExchangeRate);*/
                     }
-                    eventType = parser.nextTag();
                 }
+                eventType = parser.next();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return currencyEntries;
     }
 }

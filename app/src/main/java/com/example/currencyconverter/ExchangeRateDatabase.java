@@ -1,5 +1,7 @@
 package com.example.currencyconverter;
 
+import android.util.Log;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -79,6 +81,7 @@ public class ExchangeRateDatabase extends ExchangeRate {
 
     /**
      * Converts a value from a currency to another one
+     *
      * @return converted value
      */
     public double convert(double value, String currencyFrom, String currencyTo) {
@@ -86,13 +89,18 @@ public class ExchangeRateDatabase extends ExchangeRate {
     }
 
     /**
-     * @param currencyName 
+     * @param currencyName
      * @param exchangeRate
      */
-    public void setExchangeRate(String currencyName, double exchangeRate){
-        for (ExchangeRate r : RATES) {
-            if (r.getCurrencyName().equals(currencyName))
-                setRateForOneEuro(exchangeRate);
+    public static void setExchangeRate(String currencyName, double exchangeRate) {
+        for (ExchangeRate rate : RATES) {
+            if (rate.getCurrencyName().equalsIgnoreCase(currencyName)) {
+                rate.setRateForOneEuro(exchangeRate);
+                CURRENCIES_MAP.put(currencyName, rate);
+            }
         }
+        CURRENCIES_MAP.keySet().toArray(CURRENCIES_LIST);
+        Arrays.sort(CURRENCIES_LIST);
+        Log.i("Currency List", Arrays.toString(CURRENCIES_LIST));
     }
 }

@@ -29,6 +29,7 @@ public class CurrencyListActivity extends AppCompatActivity {
 
         ListView listView = findViewById(R.id.list_view);
         listView.setAdapter(currencyListAdapter1);
+        currencyListAdapter1.notifyDataSetChanged();
 
 
         /*Extend CurrencyListActivity with a listener to select an entry.

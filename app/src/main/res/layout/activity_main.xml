@@ -23,6 +23,7 @@
         android:layout_width="354dp"
         android:layout_height="45dp"
         android:gravity="center"
+        android:inputType="numberDecimal"
         android:hint="@string/TextInputHint"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

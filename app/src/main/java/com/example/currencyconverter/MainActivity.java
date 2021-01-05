@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.ShareActionProvider;
 import androidx.appcompat.widget.Toolbar;
@@ -23,7 +25,16 @@ public class MainActivity extends AppCompatActivity {
 
     String response; //store the conversion result for sharing
     ExchangeRateUpdateRunnable eruRunnable;
+    public Spinner dropdown1 = null;
+    public Spinner dropdown2 = null;
+    public EditText textInput = null;
+    Button b1;
 
+    /**
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Intent intent = new Intent(MainActivity.this, CurrencyListActivity.class);
@@ -36,6 +47,10 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,9 +58,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        final Spinner dropdown1, dropdown2;
-        final EditText textInput;
-        Button b1;
+
         final TextView currencyResult = findViewById(R.id.textViewResult);
 
         textInput = findViewById(R.id.textInputEditText);
@@ -57,9 +70,9 @@ public class MainActivity extends AppCompatActivity {
         final ExchangeRateDatabase currencyDropList = new ExchangeRateDatabase();
         final ExchangeRate exchangeRate = new ExchangeRate();
 
-        Context context = null;
-        context.getApplicationContext();
-        eruRunnable = new ExchangeRateUpdateRunnable(context);
+       /* Context context = null;
+        context.getApplicationContext();*/
+        eruRunnable = new ExchangeRateUpdateRunnable();
         Thread t = new Thread(eruRunnable);
         t.start();
 
@@ -68,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 R.layout.support_simple_spinner_dropdown_item, currencyDropList.getCurrencies()
         );*/
         CurrencyListAdapter cla = new CurrencyListAdapter(currencyDropList);
+        cla.notifyDataSetChanged();
         /*dropdown1.setAdapter(adapter);
         dropdown2.setAdapter(adapter);*/
         dropdown1.setAdapter(cla);
@@ -81,7 +95,13 @@ public class MainActivity extends AppCompatActivity {
 
                 String d1 = dropdown1.getSelectedItem().toString();
                 String d2 = dropdown2.getSelectedItem().toString();
-                result = currencyDropList.convert(amount, d1, d2);
+                if(amount >= 0) {
+                    result = currencyDropList.convert(amount, d1, d2);
+                }else {
+                    result = 0;
+                    Toast invalidNumberToast = Toast.makeText(MainActivity.this,"Invalid Input!", Toast.LENGTH_LONG);
+                    invalidNumberToast.show();
+                }
 
                 currencyResult.setText(("Result: " + exchangeRate.roundValue(amount) + " " +
                         d1 + " is " + exchangeRate.roundValue(result) + " " + d2));
@@ -91,11 +111,48 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    /**
+     * Dispatch onPause() to fragments.
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        SharedPreferences preferences = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        String amountToConvert = textInput.getText().toString();
+        editor.putString("amountToConvert", amountToConvert);
+        editor.apply();
+    }
+
+    /**
+     * Dispatch onResume() to fragments.  Note that for better inter-operation
+     * with older versions of the platform, at the point of this call the
+     * fragments attached to the activity are <em>not</em> resumed.
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        SharedPreferences preferences = getPreferences(Context.MODE_PRIVATE);
+
+        String storedAmountToConvert = preferences.getString("amountToConvert", "0");
+        textInput.setText(storedAmountToConvert);
+    }
+
     //TODO Exercise 4.3: Include Share-Button
     //In this exercise you will extend the currency converter with a „share“-button.
     // On selection the current result of the currency conversion can be shared with other apps.
     ShareActionProvider shareAction;
 
+    /**
+     *
+     *
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.my_menu, menu);
@@ -113,7 +170,10 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-
+    /**
+     *
+     * @param text
+     */
     private void setShareText(String text) {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
