@@ -24,6 +24,10 @@ public class ExchangeRate {
     public double getRateForOneEuro() {
         return rateForOneEuro;
     }
+
+    public void setRateForOneEuro(double exchangeRate){
+        rateForOneEuro = exchangeRate;
+    }
     /**
      * Rounds a raw currency value to 2 decimal places
      * @param value Raw currency value

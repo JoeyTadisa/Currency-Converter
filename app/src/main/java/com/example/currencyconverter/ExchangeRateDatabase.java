@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ExchangeRateDatabase {
+public class ExchangeRateDatabase extends ExchangeRate {
     // Exchange rates to EURO - price for 1 Euro
     private final static ExchangeRate[] RATES = {
             new ExchangeRate("EUR", "Bruxelles", 1.0),
@@ -83,5 +83,16 @@ public class ExchangeRateDatabase {
      */
     public double convert(double value, String currencyFrom, String currencyTo) {
         return value / getExchangeRate(currencyFrom) * getExchangeRate(currencyTo);
+    }
+
+    /**
+     * @param currencyName 
+     * @param exchangeRate
+     */
+    public void setExchangeRate(String currencyName, double exchangeRate){
+        for (ExchangeRate r : RATES) {
+            if (r.getCurrencyName().equals(currencyName))
+                setRateForOneEuro(exchangeRate);
+        }
     }
 }

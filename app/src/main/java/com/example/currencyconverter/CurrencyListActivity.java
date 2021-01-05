@@ -31,7 +31,7 @@ public class CurrencyListActivity extends AppCompatActivity {
         listView.setAdapter(currencyListAdapter1);
 
 
-        /*TODO Extend CurrencyListActivity with a listener to select an entry.
+        /*Extend CurrencyListActivity with a listener to select an entry.
         There's a fitting Intent that is created that starts the Activity for the map view.
          */
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

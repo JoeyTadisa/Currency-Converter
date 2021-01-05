@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CurrencyConverter</string>
+    <string name="app_name">Currency Converter</string>
     <string name="TextInputHint">Please type in the currency amount</string>
     <string name="ConvertButtonHint">Convert</string>
     <string name="TextResult">Your conversion result will appear here.</string>
