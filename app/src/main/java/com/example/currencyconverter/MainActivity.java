@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     final ExchangeRateDatabase currencyDropList = new ExchangeRateDatabase();
     final ExchangeRate exchangeRate = new ExchangeRate();
     CurrencyListAdapter cla = new CurrencyListAdapter(currencyDropList);
+    ToastHandler th = new ToastHandler(MainActivity.this);
 
     /**
      *
@@ -161,9 +162,9 @@ public class MainActivity extends AppCompatActivity {
             double rate = Double.parseDouble(currencyPrefs);
             ExchangeRateDatabase.setExchangeRate(currencyDropList.getCurrencyName(), rate);
         }
-        Toast currencyToastUpdate = Toast.makeText(this, "Currencies Updated",
+        /*Toast currencyToastUpdate = Toast.makeText(this, "Currencies Updated",
                 Toast.LENGTH_LONG);
-        currencyToastUpdate.show();
+        currencyToastUpdate.show();*/
        /* String restoredSpinnerOne = preferences.getString("spinner 1", "EUR");
         String restoredSpinnerTwo = preferences.getString("spinner 2", "EUR");
 
@@ -190,8 +191,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 ExchangeRateUpdateRunnable.updateCurrency();
-                ExchangeRateUpdateRunnable runnable = new ExchangeRateUpdateRunnable();
-                runnable.run();
+                /*ExchangeRateUpdateRunnable runnable = new ExchangeRateUpdateRunnable();
+                runnable.run();*/
+                th.showToast("Currency list was successfully updated!",Toast.LENGTH_LONG);
                 return true;
             }
         });

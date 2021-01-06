@@ -70,7 +70,7 @@ public class ExchangeRateUpdateRunnable implements Runnable {
    synchronized private void runToastOnUIThread(){
         Runnable runnable = new Runnable() {
 
-            private Context MainActivity;
+            //private Context MainActivity;
 
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
