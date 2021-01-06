@@ -23,12 +23,16 @@ import androidx.core.view.MenuItemCompat;
 
 public class MainActivity extends AppCompatActivity {
 
+    //Declarations
     String response; //store the conversion result for sharing
     ExchangeRateUpdateRunnable eruRunnable;
     public Spinner dropdown1 = null;
     public Spinner dropdown2 = null;
     public EditText textInput = null;
     Button b1;
+    final ExchangeRateDatabase currencyDropList = new ExchangeRateDatabase();
+    final ExchangeRate exchangeRate = new ExchangeRate();
+    CurrencyListAdapter cla = new CurrencyListAdapter(currencyDropList);
 
     /**
      *
@@ -67,9 +71,6 @@ public class MainActivity extends AppCompatActivity {
         dropdown2 = findViewById(R.id.spinner2);
         b1 = findViewById(R.id.button);
 
-        final ExchangeRateDatabase currencyDropList = new ExchangeRateDatabase();
-        final ExchangeRate exchangeRate = new ExchangeRate();
-
        /* Context context = null;
         context.getApplicationContext();*/
         eruRunnable = new ExchangeRateUpdateRunnable();
@@ -80,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
                 this,
                 R.layout.support_simple_spinner_dropdown_item, currencyDropList.getCurrencies()
         );*/
-        CurrencyListAdapter cla = new CurrencyListAdapter(currencyDropList);
-        cla.notifyDataSetChanged();
+
+        cla.notifyDataSetInvalidated();
         /*dropdown1.setAdapter(adapter);
         dropdown2.setAdapter(adapter);*/
         dropdown1.setAdapter(cla);
@@ -125,6 +126,20 @@ public class MainActivity extends AppCompatActivity {
         String amountToConvert = textInput.getText().toString();
         editor.putString("amountToConvert", amountToConvert);
         editor.apply();
+
+        //keep the new currency values
+        String [] storedCurrencies = currencyDropList.getCurrencies();
+        for(String values: storedCurrencies){
+            int i = 1;
+            editor.putString("value" + i,values);
+            i++;
+        }
+        /*
+        String spinnerOneState = dropdown1.getSelectedItem().toString();
+        String spinnerTwoState = dropdown2.getSelectedItem().toString();
+
+        editor.putString("spinner 1", spinnerOneState);
+        editor.putString("spinner 2", spinnerTwoState);*/
     }
 
     /**
@@ -140,6 +155,19 @@ public class MainActivity extends AppCompatActivity {
 
         String storedAmountToConvert = preferences.getString("amountToConvert", "0");
         textInput.setText(storedAmountToConvert);
+
+        for(String restoredCurrencies: currencyDropList.getCurrencies()){
+            String currencyPrefs = preferences.getString(restoredCurrencies,"0.00");
+            double rate = Double.parseDouble(currencyPrefs);
+            ExchangeRateDatabase.setExchangeRate(currencyDropList.getCurrencyName(), rate);
+        }
+        Toast currencyToastUpdate = Toast.makeText(this, "Currencies Updated",
+                Toast.LENGTH_LONG);
+        currencyToastUpdate.show();
+       /* String restoredSpinnerOne = preferences.getString("spinner 1", "EUR");
+        String restoredSpinnerTwo = preferences.getString("spinner 2", "EUR");
+
+        dropdown1.setSelection();*/
     }
 
     //TODO Exercise 4.3: Include Share-Button
@@ -161,7 +189,9 @@ public class MainActivity extends AppCompatActivity {
         refreshCurrencies.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                    ExchangeRateUpdateRunnable.updateCurrency();
+                ExchangeRateUpdateRunnable.updateCurrency();
+                ExchangeRateUpdateRunnable runnable = new ExchangeRateUpdateRunnable();
+                runnable.run();
                 return true;
             }
         });

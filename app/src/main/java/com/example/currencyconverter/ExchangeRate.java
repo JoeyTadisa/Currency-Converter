@@ -1,15 +1,17 @@
 package com.example.currencyconverter;
 
+import java.util.Objects;
+
 public class ExchangeRate {
     private String currencyName;
-    private static double rateForOneEuro;
+    private double rateForOneEuro;
     private String capital;
 
     public ExchangeRate(){}
 
     public ExchangeRate(String currencyName, String capital, double rateForOneEuro) {
         this.currencyName = currencyName;
-        ExchangeRate.rateForOneEuro = rateForOneEuro;
+        this.rateForOneEuro = rateForOneEuro;
         this.capital = capital;
     }
 
@@ -26,7 +28,7 @@ public class ExchangeRate {
     }
 
     public void setRateForOneEuro(double rateForOneEuro){
-        ExchangeRate.rateForOneEuro = rateForOneEuro;
+            this.rateForOneEuro = rateForOneEuro;
     }
     /**
      * Rounds a raw currency value to 2 decimal places

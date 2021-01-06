@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ExchangeRateDatabase extends ExchangeRate {
+public class ExchangeRateDatabase<map> extends ExchangeRate {
     // Exchange rates to EURO - price for 1 Euro
     private final static ExchangeRate[] RATES = {
             new ExchangeRate("EUR", "Bruxelles", 1.0),
@@ -45,7 +45,7 @@ public class ExchangeRateDatabase extends ExchangeRate {
 
     private final static Map<String, ExchangeRate> CURRENCIES_MAP = new HashMap<>();
 
-    private final static String[] CURRENCIES_LIST;
+    private static String[] CURRENCIES_LIST;
 
     static {
         for (ExchangeRate r : RATES) {
@@ -93,12 +93,16 @@ public class ExchangeRateDatabase extends ExchangeRate {
      * @param exchangeRate
      */
     public static void setExchangeRate(String currencyName, double exchangeRate) {
+        //CURRENCIES_MAP.clear();
         for (ExchangeRate rate : RATES) {
             if (rate.getCurrencyName().equalsIgnoreCase(currencyName)) {
-                rate.setRateForOneEuro(exchangeRate);
+                //CURRENCIES_MAP.get(rate);
+                //Log.i("Currency Map", CURRENCIES_MAP.toString());
+                CURRENCIES_MAP.get(currencyName).setRateForOneEuro(exchangeRate);
                 CURRENCIES_MAP.put(currencyName, rate);
             }
         }
+        CURRENCIES_LIST = new String[CURRENCIES_MAP.size()];
         CURRENCIES_MAP.keySet().toArray(CURRENCIES_LIST);
         Arrays.sort(CURRENCIES_LIST);
         Log.i("Currency List", Arrays.toString(CURRENCIES_LIST));

@@ -26,6 +26,7 @@ public class CurrencyListActivity extends AppCompatActivity {
         //       R.layout.activity_currency_list, rateDatabase.getCurrencies());
 
         final CurrencyListAdapter currencyListAdapter1 = new CurrencyListAdapter(rateDatabase);
+        currencyListAdapter1.notifyDataSetInvalidated();
 
         ListView listView = findViewById(R.id.list_view);
         listView.setAdapter(currencyListAdapter1);
