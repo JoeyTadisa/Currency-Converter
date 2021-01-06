@@ -6,9 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 public class CurrencyListAdapter extends BaseAdapter {
+    //private static ExchangeRateDatabase entry;
     ExchangeRateDatabase entry;
 
     //public CurrencyListAdapter(String[] currencyList){
@@ -17,6 +19,10 @@ public class CurrencyListAdapter extends BaseAdapter {
     public CurrencyListAdapter(ExchangeRateDatabase db) { entry = db;
     }
 
+    /**
+     * Get the number of currencies in the ExchangeRateDatabase
+     * @return Total number of currencies
+     */
     @Override
     public int getCount() {
         return entry.getCurrencies().length;
@@ -77,14 +83,17 @@ public class CurrencyListAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.activity_currency_list, null, false);
         }
 
+        //display the country's flag
         ImageView flagBox = convertView.findViewById(R.id.flag_icon);
         flagBox.setImageResource(imageId);
 
         //currencyList = entry.getCurrencies();
 
+        //display the currency name
         TextView currencyNameView = convertView.findViewById(R.id.list_text_view);
         currencyNameView.setText(currencyName);
 
+        //display the exchange rate
         TextView foreignExchangeRate = convertView.findViewById(R.id.forex);
         foreignExchangeRate.setText(forex.toString());
 

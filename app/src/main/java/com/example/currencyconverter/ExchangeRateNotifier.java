@@ -1,5 +1,6 @@
 package com.example.currencyconverter;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -16,7 +17,7 @@ public class ExchangeRateNotifier {
     private static String CHANNEL_ID = "forex_channel";
     private static String CHANNEL_DESCRIPTION = "Display the result message after updating the rates";
 
-    NotificationCompat.Builder notificationBuilder;
+    final NotificationCompat.Builder notificationBuilder;
     NotificationManager notificationManager;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -40,15 +41,18 @@ public class ExchangeRateNotifier {
     }
 
     /**
-     *
+     *  Display the notification updating the user
      */
     public void showOrUpdateNotfication(){
         notificationBuilder.setContentText("Data was successfully retrieved and updated!");
-        notificationBuilder.notify();
+        notificationBuilder.build();
+        synchronized (notificationBuilder){
+            notificationBuilder.notify();
+        }
     }
 
     /**
-     *
+     *  Remove the notification according to an ID
      */
     private void removeNotification(){
         notificationManager.cancel(NOTIFICATION_ID);

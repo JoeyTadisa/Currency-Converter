@@ -8,100 +8,105 @@
 
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/textInputEditText"
-        android:layout_width="375dp"
-        android:layout_height="40dp"
+        android:layout_width="374dp"
+        android:layout_height="56dp"
         android:gravity="center"
         android:hint="@string/textInputHint"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.942"
+        app:layout_constraintHorizontal_bias="0.697"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.46" />
+        app:layout_constraintVertical_bias="0.785" />
 
     <Spinner
         android:id="@+id/spinner2"
-        android:layout_width="311dp"
-        android:layout_height="41dp"
-        android:layout_marginEnd="440dp"
+        android:layout_width="349dp"
+        android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.217"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.675" />
+        app:layout_constraintVertical_bias="0.554" />
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="112dp"
+        android:layout_height="48dp"
         android:text="@string/convertButtonHint"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.168"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputEditText"
-        app:layout_constraintVertical_bias="0.662" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.79" />
 
     <TextView
         android:id="@+id/textViewResult"
-        android:layout_width="360dp"
-        android:layout_height="25dp"
+        android:layout_width="263dp"
+        android:layout_height="131dp"
         android:gravity="center"
         android:text="@string/textResultHint"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.911"
+        app:layout_constraintHorizontal_bias="0.965"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.647" />
+        app:layout_constraintVertical_bias="0.425" />
 
     <Spinner
         android:id="@+id/spinner3"
-        android:layout_width="315dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="92dp"
+        android:layout_width="353dp"
+        android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.219"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.463" />
+        app:layout_constraintVertical_bias="0.329" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="709dp"
-        android:layout_height="89dp"
+        android:layout_width="720dp"
+        android:layout_height="46dp"
         android:fontFamily="sans-serif"
         android:gravity="center"
         android:text="@string/textPrompt"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputEditText"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.671"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.792" />
+        app:layout_constraintVertical_bias="0.167" />
 
     <TextView
         android:id="@+id/from"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="49dp"
+        android:layout_height="36dp"
         android:text="@string/spinnerLabel_from"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/spinner3"
-        app:layout_constraintHorizontal_bias="0.72"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.441" />
-
-    <TextView
-        android:id="@+id/to"
-        android:layout_width="27dp"
-        android:layout_height="12dp"
-        android:text="@string/spinnerLabel_to"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/spinner2"
         app:layout_constraintHorizontal_bias="0.764"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.626" />
+        app:layout_constraintVertical_bias="0.338" />
+
+    <TextView
+        android:id="@+id/to"
+        android:layout_width="21dp"
+        android:layout_height="33dp"
+        android:text="@string/spinnerLabel_to"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/spinner2"
+        app:layout_constraintHorizontal_bias="0.661"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.574" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/my_toolbar"

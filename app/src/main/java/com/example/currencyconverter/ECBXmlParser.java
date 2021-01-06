@@ -19,8 +19,8 @@ public class ECBXmlParser {
         public final String rate;
 
         /**
-         * @param currencyName
-         * @param rate
+         * @param currencyName country's currency name
+         * @param rate exchange rate
          */
         private NewExchangeRate(String currencyName, String rate) {
             this.currencyName = currencyName;
@@ -29,7 +29,7 @@ public class ECBXmlParser {
     }
 
     /**
-     *
+     *  Search for the desired tags and extract the relevant attributes.
      */
     public void parse() {
         //List<NewExchangeRate> currencyEntries = new ArrayList<>();
@@ -54,6 +54,7 @@ public class ECBXmlParser {
 
             while (eventType != XmlPullParser.END_DOCUMENT) {
                 if (eventType == XmlPullParser.START_TAG) {
+                    //when the Cube tag has two elements, extract them and pass them on to the database
                     if ("Cube".equals(parser.getName()) && parser.getAttributeCount() == 2) {
                         String newCurrency = parser.getAttributeValue(null, "currency");
                         String newRate = parser.getAttributeValue(null, "rate");
@@ -63,7 +64,7 @@ public class ECBXmlParser {
                         currencyEntries.add(newExchangeRate);*/
                     }
                 }
-                eventType = parser.next();
+                eventType = parser.next(); //move to the next tag
             }
         } catch (Exception e) {
             e.printStackTrace();

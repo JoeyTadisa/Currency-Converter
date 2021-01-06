@@ -1,11 +1,13 @@
 package com.example.currencyconverter;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -21,6 +23,7 @@ import androidx.appcompat.widget.ShareActionProvider;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.MenuItemCompat;
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class MainActivity extends AppCompatActivity {
 
     //Declarations
@@ -63,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
+        final SharedPreferences preferences = getPreferences(Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = preferences.edit();
 
         final TextView currencyResult = findViewById(R.id.textViewResult);
 
@@ -72,16 +77,24 @@ public class MainActivity extends AppCompatActivity {
         dropdown2 = findViewById(R.id.spinner2);
         b1 = findViewById(R.id.button);
 
+        int spinnerOneSelection = preferences.getInt("currencyChoiceOne", 0);
+        int spinnerTwoSelection = preferences.getInt("currencyChoiceTwo", 1);
+
+        dropdown1.setSelection(spinnerOneSelection);
+        dropdown2.setSelection(spinnerTwoSelection);
+
        /* Context context = null;
         context.getApplicationContext();*/
-        eruRunnable = new ExchangeRateUpdateRunnable();
-        Thread t = new Thread(eruRunnable);
-        t.start();
+        //eruRunnable = new ExchangeRateUpdateRunnable();
+
+       // eruRunnable.run();
 
         /*ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
                 R.layout.support_simple_spinner_dropdown_item, currencyDropList.getCurrencies()
         );*/
+
+        ExchangeRateUpdateRunnable.updateCurrency();
 
         cla.notifyDataSetInvalidated();
         /*dropdown1.setAdapter(adapter);
@@ -95,8 +108,12 @@ public class MainActivity extends AppCompatActivity {
                 double result;
                 double amount = Double.parseDouble(textInput.getText().toString());
 
+                editor.putString("inputAmount", textInput.getText().toString());
+
                 String d1 = dropdown1.getSelectedItem().toString();
+                int spinnerOneSelection = dropdown1.getSelectedItemPosition();
                 String d2 = dropdown2.getSelectedItem().toString();
+                int spinnerTwoSelection = dropdown2.getSelectedItemPosition();
                 if(amount >= 0) {
                     result = currencyDropList.convert(amount, d1, d2);
                 }else {
@@ -110,8 +127,20 @@ public class MainActivity extends AppCompatActivity {
 
                 response = "Result: " + exchangeRate.roundValue(amount) + " " +
                         d1 + " is " + exchangeRate.roundValue(result) + " " + d2;
+
+                //keep conversion data every time the 'convert' button is clicked
+                editor.putInt("currencyChoiceOne", spinnerOneSelection);
+                editor.putInt("currencyChoiceTwo", spinnerTwoSelection);
+                editor.putString("stringConversionResponse", response);
+                editor.apply();
             }
         });
+
+        for(String restoredCurrencies: currencyDropList.getCurrencies()){
+            String currencyPrefs = preferences.getString(restoredCurrencies,"0.00");
+            double rate = Double.parseDouble(currencyPrefs);
+            ExchangeRateDatabase.setExchangeRate(currencyDropList.getCurrencyName(), rate);
+        }
     }
 
     /**
@@ -127,14 +156,6 @@ public class MainActivity extends AppCompatActivity {
         String amountToConvert = textInput.getText().toString();
         editor.putString("amountToConvert", amountToConvert);
         editor.apply();
-
-        //keep the new currency values
-        String [] storedCurrencies = currencyDropList.getCurrencies();
-        for(String values: storedCurrencies){
-            int i = 1;
-            editor.putString("value" + i,values);
-            i++;
-        }
         /*
         String spinnerOneState = dropdown1.getSelectedItem().toString();
         String spinnerTwoState = dropdown2.getSelectedItem().toString();
@@ -153,9 +174,16 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
 
         SharedPreferences preferences = getPreferences(Context.MODE_PRIVATE);
+        //SharedPreferences.Editor editor = preferences.edit();
+
+        int spinnerOneSelection = preferences.getInt("spinnerOneSelection", 0);
+        int spinnerTwoSelection = preferences.getInt("spinnerTwoSelection", 1);
 
         String storedAmountToConvert = preferences.getString("amountToConvert", "0");
         textInput.setText(storedAmountToConvert);
+
+        dropdown1.setSelection(spinnerOneSelection);
+        dropdown2.setSelection(spinnerTwoSelection);
 
         for(String restoredCurrencies: currencyDropList.getCurrencies()){
             String currencyPrefs = preferences.getString(restoredCurrencies,"0.00");
@@ -177,10 +205,10 @@ public class MainActivity extends AppCompatActivity {
     ShareActionProvider shareAction;
 
     /**
+     * Create the menu buttons
      *
-     *
-     * @param menu
-     * @return
+     * @param menu Context menu
+     * @return boolean true - always form the menu items
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -194,17 +222,33 @@ public class MainActivity extends AppCompatActivity {
                 /*ExchangeRateUpdateRunnable runnable = new ExchangeRateUpdateRunnable();
                 runnable.run();*/
                 th.showToast("Currency list was successfully updated!",Toast.LENGTH_LONG);
+                ExchangeRateNotifier exchangeRateNotifier = new ExchangeRateNotifier(MainActivity.this);
+                exchangeRateNotifier.showOrUpdateNotfication();
                 return true;
             }
         });
+
+        //keep the new currency values after the refresh button has been pressed
+        SharedPreferences preferences = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        String [] storedCurrencies = currencyDropList.getCurrencies();
+        for(String values: storedCurrencies){
+            int i = 1;
+            editor.putString("value" + i,values);
+            i++;
+        }
+        editor.apply();
+
         shareAction = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
+        String response = preferences.getString("stringConversionResponse", "Error in retrieving the conversion response.");
         setShareText(response);
         return true;
     }
 
     /**
+     *  Assign text to be shared when a conversion is performed
      *
-     * @param text
+     * @param text String value detailing the conversion results
      */
     private void setShareText(String text) {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);

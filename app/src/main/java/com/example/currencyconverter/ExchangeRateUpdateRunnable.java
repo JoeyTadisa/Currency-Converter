@@ -10,23 +10,19 @@ import androidx.annotation.RequiresApi;
 
 import java.util.List;
 
+/**
+ *  Run currency updates in the background using <code>Runnable</code>
+ */
 public class ExchangeRateUpdateRunnable implements Runnable {
 
-    private final Context context;
+    //private final Context context;
     private boolean isRunning = false;
 
-    //default constructor
-    public ExchangeRateUpdateRunnable(Context context){
-        this.context = context;
+    public ExchangeRateUpdateRunnable() {
     }
-
-    public ExchangeRateUpdateRunnable(){
-        context = null;
-    }
-
 
     /**
-     *
+     *  Makes an instance of <code>ECBXmlParser</code> and begins extracting the relevant information.
      */
     static void updateCurrency() {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -53,7 +49,7 @@ public class ExchangeRateUpdateRunnable implements Runnable {
             synchronized (ExchangeRateUpdateRunnable.this) {
                 if (isRunning) {
                     updateCurrency();
-                    runToastOnUIThread();
+                    //runToastOnUIThread();
                 }
                 try {
                     Thread.sleep(1000);
@@ -62,27 +58,5 @@ public class ExchangeRateUpdateRunnable implements Runnable {
                 }
             }
         }
-    }
-
-    /**
-     *
-     */
-   synchronized private void runToastOnUIThread(){
-        Runnable runnable = new Runnable() {
-
-            //private Context MainActivity;
-
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void run() {
-                Toast toast = Toast.makeText(context,"Update Successful", Toast.LENGTH_LONG);
-                toast.show();
-                ExchangeRateNotifier notifier = null;
-                if (context != null) {
-                    notifier = new ExchangeRateNotifier(context);
-                }
-                notifier.showOrUpdateNotfication();
-            }
-        };
     }
 }
