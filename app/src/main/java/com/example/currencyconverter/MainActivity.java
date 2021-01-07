@@ -156,12 +156,6 @@ public class MainActivity extends AppCompatActivity {
         String amountToConvert = textInput.getText().toString();
         editor.putString("amountToConvert", amountToConvert);
         editor.apply();
-        /*
-        String spinnerOneState = dropdown1.getSelectedItem().toString();
-        String spinnerTwoState = dropdown2.getSelectedItem().toString();
-
-        editor.putString("spinner 1", spinnerOneState);
-        editor.putString("spinner 2", spinnerTwoState);*/
     }
 
     /**
